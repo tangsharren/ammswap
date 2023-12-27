@@ -8,7 +8,7 @@ import "@openzeppelin/contracts/utils/math/Math.sol";
 import "@openzeppelin/contracts/utils/Address.sol";
 import "@openzeppelin/contracts/utils/Context.sol";
 
-contract XYZPool {
+contract XYKPool {
     using SafeMath for uint256;
     using Address for address;
 
