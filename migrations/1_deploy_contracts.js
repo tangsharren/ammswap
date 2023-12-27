@@ -8,7 +8,7 @@ module.exports = async function (deployer, network, accounts) {
     const zenixInstance = await Zenix.deployed();
 
     // Deploy Flare token
-    await deployer.deploy(Flare, accounts[1]); // Use accounts[1] as the initial owner
+    await deployer.deploy(Flare, accounts[0]); // Use accounts[0] as the initial owner
     const flareInstance = await Flare.deployed();
 
     // Deploy XYKPool contract with the deployed Zenix and Flare token contracts
