@@ -1,0 +1,125 @@
+.wrapper{
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 3.5rem;
+} 
+
+.content{
+    background-color: #191B1F;
+    border-radius: 1rem;
+    padding: 1rem;
+}
+
+.formHeader{
+    padding-left: 0.5rem; 
+    padding-right: 0.5rem; 
+    display: flex;
+    align-items: center;
+    justify-content: space-between; 
+    font-weight: 600;
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    color:azure;
+}
+    
+
+.transferPropContainer{
+    background-color:#20242A;
+    margin-top: 0.75rem;
+    margin-bottom: 0.75rem; 
+    border-radius: 1rem; 
+    padding: 1.5rem; 
+    font-size: 1.875rem; 
+    line-height: 2.25rem;
+    border-style: solid;
+    border-color:#20242A;
+    display: flex; 
+    justify-content: space-between; 
+} 
+
+.transferPropContainer:hover{
+    border-color:#41444F;
+}
+
+.transferPropInput{ 
+    outline: none;
+    border-radius: 1rem;
+    width: 100%; 
+    font-size: 1.5rem;
+    line-height: 2rem;
+}
+
+.transferPropInput::placeholder{
+    color: black;
+}
+
+.currencySelector{
+    display: flex;
+    width: 25%;
+}
+
+.currencySelectorContent {
+    width: 15pc; 
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #F9F0D1;
+    border-radius: 1rem;
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    font-weight: normal;
+    cursor: pointer; 
+    padding: 0.5rem;
+    margin: 0.25rem;
+}
+
+.currencySelectorContent:hover{
+    background-color:#d8e2ed;
+}
+
+.currencySelectorIcon {
+    display: flex;
+    align-items: center;
+}
+
+.currencySelectorIcon .ethLogo{
+    height:20px;
+    width:20px;
+}
+
+.currencySelectorTicker {
+    margin-right: 0.5rem; 
+    margin-left: 0.5rem;
+    font-weight: 450;
+}
+
+.currencySelectorArrow {
+    font-size: 1.125rem; 
+    line-height: 1.75rem;
+}
+
+.confirmButton  {
+    background-color: #cca97d; 
+    margin-top: 0.5rem; 
+    margin-bottom: 0.5rem;
+    border-radius: 1rem;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+    padding-left: 2rem;
+    padding-right: 2rem;  
+    font-size: 1.25rem;
+    line-height: 1.75rem; 
+    font-weight: 600;
+    display: flex; 
+    align-items: center;
+    justify-content: center;
+    cursor:pointer;
+    border-style: solid;
+    border-color:#cca97d;
+}
+
+.confirmButton:hover{
+    border-color:#234169;
+}

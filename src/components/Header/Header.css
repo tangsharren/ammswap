@@ -1,0 +1,47 @@
+.nav-container{
+    height:70px !important;
+}
+
+.navbar{
+    padding-top:0px !important;
+    background-color:#262626;
+}
+
+.navbar-brand{
+    padding-top:10px;
+    font-size:1.3em;
+    font-weight: bold;
+}
+
+.nav-link{
+    font-size:1.2em;
+    padding-top:13px;
+    margin-left: 10px;
+    margin-right:10px;
+}
+
+.logo-container{
+    display:block;
+    width:60px;
+    height:60px;
+    margin:5px 30px 5px 30px;
+    
+}
+
+.logo-img{
+    width:100%;
+}
+
+.btn{
+    margin-right: 40px;
+    margin-top: 10px;
+}
+
+.btn-primary{
+    background-color:rgb(62, 77, 97);
+    font-weight: bold;
+}
+
+.btn-primary:hover{
+    background-color:rgb(43, 54, 68);
+}

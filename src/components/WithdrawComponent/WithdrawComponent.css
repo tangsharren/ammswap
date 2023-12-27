@@ -1,0 +1,57 @@
+.card{
+    max-width:500px;
+    margin:auto;
+}
+
+.card-title{
+    display:flex;
+    color:rgb(43, 54, 68);
+    font-weight:bold;
+}
+
+.label{
+    font-weight:bold;
+}
+
+.pool-token{
+    margin-top:10px;
+    margin-bottom:10px;
+    display:flex;
+    justify-content: space-between;
+}
+
+.pool-share{
+    margin-top:10px;
+    margin-bottom:20px;
+    display:flex;
+    justify-content: space-between;
+}
+
+.token-get-back{
+    background-color: rgba(255, 235, 205, 0.388);
+    padding:0px 15px;
+    border-radius:5px;
+}
+
+.input-group:not(.has-validation)>.dropdown-toggle:nth-last-child(n+3), .input-group:not(.has-validation)>:not(:last-child):not(.dropdown-toggle):not(.dropdown-menu) {
+    width:80px
+}
+
+.withdraw-btn{
+    display:block;
+    margin-left:auto;
+    margin-right: auto;
+    outline: none;
+    border: none;
+    padding: 8px !important;
+    width: 155px;
+}
+
+.btn-primary{
+    background-color:rgb(62, 77, 97);
+    font-weight: bold;
+}
+
+.btn-primary:hover{
+    background-color:rgb(43, 54, 68);
+}
