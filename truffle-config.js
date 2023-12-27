@@ -22,10 +22,10 @@
 //
 // const fs = require('fs');
 // const mnemonic = fs.readFileSync(".secret").toString().trim();
-require('dotenv').config();
-const { MNEMONIC, PROJECT_ID } = process.env;
-//project_id is the api key of the project
-const HDWalletProvider = require('@truffle/hdwallet-provider');
+// require('dotenv').config();
+// const { MNEMONIC, PROJECT_ID } = process.env;
+// //project_id is the api key of the project
+// const HDWalletProvider = require('@truffle/hdwallet-provider');
 module.exports = {
   /**
    * Networks define how you connect to your ethereum client and let you set the
@@ -36,7 +36,7 @@ module.exports = {
    *
    * $ truffle test --network <network-name>
    */
-
+  //contracts_build_directory : "./client/src/contracts",
   networks: {
     // Useful for testing. The `development` name is special - truffle uses it by default
     // if it's defined here and no other network is specified at the command line.
@@ -61,13 +61,13 @@ module.exports = {
     // },
     // Useful for deploying to a public network.
     // NB: It's important to wrap the provider as a function.
-    goerli: {
-      provider: () => new HDWalletProvider(MNEMONIC, `https://eth-goerli.g.alchemy.com/v2/${PROJECT_ID}`),
-      network_id: 5,       // Goerli's id
-      confirmations: 2,    // # of confirmations to wait between deployments. (default: 0)
-      timeoutBlocks: 200,  // # of blocks before a deployment times out  (minimum/default: 50)
-      skipDryRun: true     // Skip dry run before migrations? (default: false for public nets )
-    },
+    // goerli: {
+    //   provider: () => new HDWalletProvider(MNEMONIC, `https://eth-goerli.g.alchemy.com/v2/${PROJECT_ID}`),
+    //   network_id: 5,       // Goerli's id
+    //   confirmations: 2,    // # of confirmations to wait between deployments. (default: 0)
+    //   timeoutBlocks: 200,  // # of blocks before a deployment times out  (minimum/default: 50)
+    //   skipDryRun: true     // Skip dry run before migrations? (default: false for public nets )
+    // },
 
     // Useful for private networks
     // private: {
