@@ -40,12 +40,13 @@ contract XYKPool {
     error XYZPool__PoolIsEmpty();
     error XYZPool__AmountBiggerThanReserve(uint256 value1, uint256 value2);
 
-    modifier identicalTokenAddresses(IERC20 token1, IERC20 token2) {
-        if (token1 == token2) {
-            revert XYZPool__IdenticalTokenAddress(token1, token2);
+    modifier identicalTokenAddresses(IERC20 _token1, IERC20 _token2) {
+        if (_token1 == _token2) {
+            revert XYZPool__IdenticalTokenAddress(_token1, _token2);
         }
         _;
     }
+
 
     modifier zeroTokenAddress(IERC20 token) {
         if (address(token) == address(0)) {
@@ -98,11 +99,9 @@ contract XYKPool {
         _;
     }
 
-    constructor(IERC20 _token1, IERC20 _token2, address _token1Address, address _token2Address) zeroTokenAddress(_token1) zeroTokenAddress(_token2) identicalTokenAddresses(_token1, _token2) {
+    constructor(IERC20 _token1, IERC20 _token2) zeroTokenAddress(_token1) zeroTokenAddress(_token2) identicalTokenAddresses(_token1, _token2) {
         token1 = _token1;
         token2 = _token2;
-        token1Address = _token1Address;
-        token2Address = _token2Address;
     }
 
 
