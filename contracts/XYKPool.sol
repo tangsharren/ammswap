@@ -3,46 +3,55 @@ pragma solidity 0.8.20;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol";
-// import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 import "@openzeppelin/contracts/utils/math/Math.sol";
 import "@openzeppelin/contracts/utils/Address.sol";
 import "@openzeppelin/contracts/utils/Context.sol";
 
 contract XYKPool {
-    // using SafeMath for uint256;
     using Address for address;
-
+    address public owner; 
     IERC20 public immutable token1;
     IERC20 public immutable token2;
     uint256 public reserve1;
     uint256 public reserve2;
     uint256 public totalLiquidity;
     mapping(address => uint256) public userShare;
-    address public token1Address;
-    address public token2Address;
 
     event ShareChanged(address indexed user, bool isAdded, uint256 share);
     event LiquidityChanged(uint256 totalLiquidity, bool isAdded);
     event ReserveChanged(address indexed user, bool isAdded, uint256 amount1, uint256 amount2);
     event Swapped(address user, IERC20 tokenIn, IERC20 tokenOut, uint256 amountIn, uint256 amountOut);
 
+    
+    function getReserves() external view returns (uint256, uint256) {
+        return (reserve1, reserve2);
+    }
+
+    function getTotalLiquidity() external view returns (uint256) {
+        return totalLiquidity;
+    }
+
+    function getUserShare(address user) external view returns (uint256) {
+        return userShare[user];
+    }
+
     // Custom errors
-    error XYZPool__ValueCannotBeZero(uint256 value);
-    error XYZPool__NotProperRatio(uint256 value1, uint256 value2);
-    error XYZPool__AmountNotApproved(IERC20 token, uint256 value);
-    error XYZPool__IdenticalTokenAddress(IERC20 token1, IERC20 token2);
-    error XYZPool__ZeroTokenAddress(IERC20 token);
-    error XYZPool__InsufficientBalance(IERC20 token, uint256 value);
-    error XYZPool__TransferFromFailed(address from, address to, IERC20 token, uint256 value);
-    error XYZPool__TransferFailed(address to, IERC20 token, uint256 value);
-    error XYZPool__ZeroUserShare(uint256 value);
-    error XYZPool__InvalidTokenAddress(IERC20 token);
-    error XYZPool__PoolIsEmpty();
-    error XYZPool__AmountBiggerThanReserve(uint256 value1, uint256 value2);
+    error XYKPool__ValueCannotBeZero(uint256 value);
+    error XYKPool__NotProperRatio(uint256 value1, uint256 value2);
+    error XYKPool__AmountNotApproved(IERC20 token, uint256 value);
+    error XYKPool__IdenticalTokenAddress(IERC20 token1, IERC20 token2);
+    error XYKPool__ZeroTokenAddress(IERC20 token);
+    error XYKPool__InsufficientBalance(IERC20 token, uint256 value);
+    error XYKPool__TransferFromFailed(address from, address to, IERC20 token, uint256 value);
+    error XYKPool__TransferFailed(address to, IERC20 token, uint256 value);
+    error XYKPool__ZeroUserShare(uint256 value);
+    error XYKPool__InvalidTokenAddress(IERC20 token);
+    error XYKPool__PoolIsEmpty();
+    error XYKPool__AmountBiggerThanReserve(uint256 value1, uint256 value2);
 
     modifier identicalTokenAddresses(IERC20 _token1, IERC20 _token2) {
         if (_token1 == _token2) {
-            revert XYZPool__IdenticalTokenAddress(_token1, _token2);
+            revert XYKPool__IdenticalTokenAddress(_token1, _token2);
         }
         _;
     }
@@ -50,21 +59,21 @@ contract XYKPool {
 
     modifier zeroTokenAddress(IERC20 token) {
         if (address(token) == address(0)) {
-            revert XYZPool__ZeroTokenAddress(token);
+            revert XYKPool__ZeroTokenAddress(token);
         }
         _;
     }
 
     modifier validTokenAddress(IERC20 token) {
         if (token != token1 && token != token2) {
-            revert XYZPool__InvalidTokenAddress(token);
+            revert XYKPool__InvalidTokenAddress(token);
         }
         _;
     }
 
     modifier nonZeroAmount(uint256 amount) {
         if (amount == 0) {
-            revert XYZPool__ValueCannotBeZero(amount);
+            revert XYKPool__ValueCannotBeZero(amount);
         }
         _;
     }
@@ -72,7 +81,7 @@ contract XYKPool {
     modifier notProperRatio(uint256 amount1, uint256 amount2) {
         if (totalLiquidity > 0) {
             if (amount2 != getRatio(token1, amount1)) {
-                revert XYZPool__NotProperRatio(amount1, amount2);
+                revert XYKPool__NotProperRatio(amount1, amount2);
             }
         }
         _;
@@ -80,31 +89,39 @@ contract XYKPool {
 
     modifier isAmountApproved(IERC20 token, uint256 amount) {
         if (token.allowance(msg.sender, address(this)) < amount) {
-            revert XYZPool__AmountNotApproved(token, amount);
+            revert XYKPool__AmountNotApproved(token, amount);
         }
         _;
     }
 
     modifier hasBalance(IERC20 token, uint256 amount) {
         if (token.balanceOf(msg.sender) < amount) {
-            revert XYZPool__InsufficientBalance(token, amount);
+            revert XYKPool__InsufficientBalance(token, amount);
         }
         _;
     }
 
     modifier zeroReserve() {
         if (reserve1 == 0 || reserve2 == 0) {
-            revert XYZPool__PoolIsEmpty();
+            revert XYKPool__PoolIsEmpty();
         }
         _;
     }
-
+    modifier onlyOwner() {
+        require(msg.sender == owner, "XYKPool: caller is not the owner");
+        _;
+    }
     constructor(IERC20 _token1, IERC20 _token2) zeroTokenAddress(_token1) zeroTokenAddress(_token2) identicalTokenAddresses(_token1, _token2) {
         token1 = _token1;
         token2 = _token2;
     }
 
 
+    // Add this function to set the owner during deployment
+    function setOwner(address _owner) external {
+        require(owner == address(0), "XYKPool: owner already set");
+        owner = _owner;
+    }
 
     function addLiquidity(uint256 amountToken1, uint256 amountToken2)
         external
@@ -134,7 +151,7 @@ contract XYKPool {
     function removeLiquidity() external {
         uint256 userShareAmount = userShare[msg.sender];
         if (userShareAmount == 0) {
-            revert XYZPool__ZeroUserShare(0);
+            revert XYKPool__ZeroUserShare(0);
         }
 
         uint256 amountToken1 = (reserve1 * userShareAmount) / totalLiquidity;
@@ -194,7 +211,7 @@ contract XYKPool {
         }
 
         if (userShareAmount == 0) {
-            revert XYZPool__ZeroUserShare(userShareAmount);
+            revert XYKPool__ZeroUserShare(userShareAmount);
         }
 
         _mintShare(userShareAmount);
@@ -239,13 +256,13 @@ contract XYKPool {
 
     function _transferTokenToContract(IERC20 token, uint256 amount) private {
         if (!token.transferFrom(msg.sender, address(this), amount)) {
-            revert XYZPool__TransferFromFailed(msg.sender, address(this), token, amount);
+            revert XYKPool__TransferFromFailed(msg.sender, address(this), token, amount);
         }
     }
 
     function _transferTokenToUser(IERC20 token, address to, uint256 amount) private {
         if (!token.transfer(to, amount)) {
-            revert XYZPool__TransferFailed(to, token, amount);
+            revert XYKPool__TransferFailed(to, token, amount);
         }
     }
 
@@ -253,7 +270,7 @@ contract XYKPool {
         if (token == token1 || token == token2) {
             _transferTokenToUser(token, to, amount);
         } else {
-            revert XYZPool__InvalidTokenAddress(token);
+            revert XYKPool__InvalidTokenAddress(token);
         }
     }
 
@@ -269,7 +286,7 @@ contract XYKPool {
 
     function _checkAmount(uint256 amountToken, uint256 reserve) private pure {
         if (amountToken > reserve) {
-            revert XYZPool__AmountBiggerThanReserve(amountToken, reserve);
+            revert XYKPool__AmountBiggerThanReserve(amountToken, reserve);
         }
     }
 }
