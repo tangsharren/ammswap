@@ -7,6 +7,6 @@
 ## To run the react webapp for the first time,  
 <br/> 1. In terminal of /path/to/directory/ammswap-main <br/> truffle migrate --reset<br/> npm install web3<br/><br/>
 2.In terminal of client (cd client) <br/> npm install ethers react-query react-query/devtools
-<br/> Subsequent run of react app,<br/> cd client<br/> npm start<br/><br/>
+<br/><br/> Subsequent run of react app,<br/> cd client<br/> npm start<br/><br/>
 ## To run test/test.js for the first time<br/> 
-npm install --save-dev mocha chai truffle<br/>Subssequent run of test.js<br/>npx truffle test
+npm install --save-dev mocha chai truffle<br/><br/>Subsequent run of test.js<br/>npx truffle test
