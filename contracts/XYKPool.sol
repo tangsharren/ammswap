@@ -107,20 +107,22 @@ contract XYKPool {
         }
         _;
     }
+    //to restrict certain functions to only be callable by the owner
     modifier onlyOwner() {
         require(msg.sender == owner, "XYKPool: caller is not the owner");
         _;
     }
-    constructor(IERC20 _token1, IERC20 _token2) zeroTokenAddress(_token1) zeroTokenAddress(_token2) identicalTokenAddresses(_token1, _token2) {
+    constructor(address _owner,IERC20 _token1, IERC20 _token2) zeroTokenAddress(_token1) zeroTokenAddress(_token2) identicalTokenAddresses(_token1, _token2) {
         token1 = _token1;
         token2 = _token2;
+        require(_owner != address(0), "XYKPool: owner cannot be zero address");
+        owner = _owner;
     }
 
 
-    // Add this function to set the owner during deployment
-    function setOwner(address _owner) external {
-        require(owner == address(0), "XYKPool: owner already set");
-        owner = _owner;
+    // to set the owner after deployment (optional)
+    function setOwner(address _newOwner) external onlyOwner {
+        owner = _newOwner;
     }
 
     function addLiquidity(uint256 amountToken1, uint256 amountToken2)
@@ -133,6 +135,7 @@ contract XYKPool {
         isAmountApproved(token2, amountToken2)
         notProperRatio(amountToken1, amountToken2)
     {
+
         _addLiquidity(amountToken1, amountToken2);
     }
 
@@ -150,6 +153,7 @@ contract XYKPool {
 
     function removeLiquidity() external {
         uint256 userShareAmount = userShare[msg.sender];
+        require(userShareAmount > 0, "XYKPool__ZeroUserShare");
         if (userShareAmount == 0) {
             revert XYKPool__ZeroUserShare(0);
         }
@@ -210,10 +214,6 @@ contract XYKPool {
             userShareAmount = Math.min((amountToken1 * totalLiquidity) / reserve1, (amountToken2 * totalLiquidity) / reserve2);
         }
 
-        if (userShareAmount == 0) {
-            revert XYKPool__ZeroUserShare(userShareAmount);
-        }
-
         _mintShare(userShareAmount);
 
         reserve1 += amountToken1;
@@ -235,8 +235,11 @@ contract XYKPool {
             : (token2, token1, reserve2, reserve1);
 
         {
+            // Ensure reserveIn is not zero to prevent division by zero
+            require(reserveIn > 0, "ReserveIn cannot be zero");
             uint256 amountOut = (reserveOut * amountIn) / reserveIn;
-
+            // Ensure amountOut is an integer
+            amountOut = amountOut * (10 ** tokenOut.decimals()) / (10 ** 18);
             _checkAmount(amountOut, reserveOut);
 
             _transferTokenToContract(tokenIn, amountIn);
