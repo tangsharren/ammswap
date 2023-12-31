@@ -12,5 +12,5 @@ module.exports = async function (deployer, network, accounts) {
     const flareInstance = await Flare.deployed();
 
     // Deploy XYKPool contract with the deployed Zenix and Flare token contracts
-    await deployer.deploy(XYKPool, zenixInstance.address, flareInstance.address);
+    await deployer.deploy(XYKPool, accounts[0], zenixInstance.address, flareInstance.address);
 };
