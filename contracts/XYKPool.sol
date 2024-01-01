@@ -235,11 +235,8 @@ contract XYKPool {
             : (token2, token1, reserve2, reserve1);
 
         {
-            // Ensure reserveIn is not zero to prevent division by zero
-            require(reserveIn > 0, "ReserveIn cannot be zero");
             uint256 amountOut = (reserveOut * amountIn) / reserveIn;
-            // Ensure amountOut is an integer
-            amountOut = amountOut * (10 ** tokenOut.decimals()) / (10 ** 18);
+
             _checkAmount(amountOut, reserveOut);
 
             _transferTokenToContract(tokenIn, amountIn);
