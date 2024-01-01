@@ -441,10 +441,12 @@ function App() {
 
     return (
       <div className="App">
+   
       <header className="navbar">
         <div className="logo">
-          <img src="logo" alt="AMMSwap Logo" />
-          <span>AMMSwap</span>
+            <img src={require('./fire.png')} alt="FlareSwap Logo" />
+
+          <span>FlareSwap</span>
         </div>
         <div className="wallet-status">
           <p>Connected Account: {connected && accounts.length > 0 ? accounts[0] : 'Not connected'}</p>
@@ -685,7 +687,7 @@ function App() {
       <
       div style = {
       { textAlign: 'center', fontWeight: 'bold', fontSize: '1em' }
-      } > < strong > Total LP Token < / strong >  <  /
+      } > < strong > Total Liquidity < / strong >  <  /
       div >
       <
       div style = {
@@ -737,7 +739,7 @@ function App() {
       <
       div style = {
       { textAlign: 'center', fontWeight: 'bold', fontSize: '1em' }
-      } > < strong > LP Shared < / strong >  <  /
+      } > < strong > User Share < / strong >  <  /
       div >
       <
       div style = {
