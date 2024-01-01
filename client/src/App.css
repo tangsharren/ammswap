@@ -40,10 +40,11 @@
 }
 
 button {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     padding: 10px 15px;
-    font-size: 16px;
-    background-color: #4CAF50;
-    color: #fff;
+    font-size: 20px;
+    background-color: #dbb125;
+    color: #000000;
     border: none;
     border-radius: 4px;
     cursor: pointer;
@@ -51,10 +52,9 @@ button {
 }
 
 
-/* Add your own styles or use a CSS framework for a more polished design */
 
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: 'Playfair Display', serif;
     background-color: #f8f8f8;
     margin: 0;
     padding: 0;
@@ -84,6 +84,7 @@ label {
 
 select,
 input {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     width: 100%;
     padding: 10px;
     margin-top: 5px;
@@ -91,10 +92,12 @@ input {
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
+    font-size: 15px;
 }
 
 button {
-    background-color: #4caf50;
+    background-color: #E89528;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     color: #fff;
     padding: 10px 20px;
     border: none;
@@ -104,11 +107,11 @@ button {
 }
 
 button:hover {
-    background-color: #45a049;
+    background-color: #F4A32C;
 }
 
 .navbar {
-    background-color: #4caf50;
+    background-color:#000000;
     padding: 15px;
     color: #fff;
     display: flex;
@@ -122,14 +125,21 @@ button:hover {
 }
 
 .logo img {
-    width: 30px;
+    width: 50px;
     /* Adjust the size as needed */
     margin-right: 10px;
 }
 
 .logo span {
-    font-size: 24px;
+    font-size: 1.7rem;
+    font-family: 'Georgia', fantasy;
+    text-decoration-color: #ccc;
+    text-decoration:wavy;
+    text-shadow: #ccc;
+    text-overflow: ellipsis;
+    font-weight: 900;
     font-weight: bold;
+    color: #E89528;
 }
 
 .wallet-status {
@@ -146,7 +156,7 @@ button:hover {
     padding: 10px 15px;
     font-size: 16px;
     background-color: #fff;
-    color: #4caf50;
+    color: #F4A32C;
     border: none;
     border-radius: 4px;
     cursor: pointer;
