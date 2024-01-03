@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.8.20;
+pragma solidity 0.8.15;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol";
@@ -211,10 +211,14 @@ contract XYKPool {
             userShareAmount = Math.sqrt(amountToken1 * amountToken2);
         } else {
             // If the pool is not empty, calculate the minimum share to maintain ratio
-            userShareAmount = Math.min((amountToken1 * totalLiquidity) / reserve1, (amountToken2 * totalLiquidity) / reserve2);
-        }
+             userShareAmount = Math.min(
+            (amountToken1 * totalLiquidity) / reserve1,
+            (amountToken2 * totalLiquidity) / reserve2
+        );
+    }
 
-        _mintShare(userShareAmount);
+        userShare[msg.sender] += userShareAmount;
+        totalLiquidity += userShareAmount;
 
         reserve1 += amountToken1;
         reserve2 += amountToken2;
