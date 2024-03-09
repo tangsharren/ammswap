@@ -1,3 +1,4 @@
+Slides: https://docs.google.com/presentation/d/1FVeNpr0gHun_8E7zko2RmgUtlX5QHHpm0QGqcBY5zGg/edit#slide=id.g2ab50da65e8_0_0 
 1.Download and open this folder with visual studio code(VSC) <br/> 2.Open terminal in VSC  <br/> 3.cd ammswap-main <br/> 4.Open your Ganache and start a new workspace with any name <br/> 5.In Ganache, click 'import project', import truffle_config.js of this project to Ganache <br/> 6.In VSC terminal, run: <br/> truffle compile  <br/> truffle migrate --reset <br/> After successful migration, you will see the transactions on Ganache <br/>
 
 ## When you get error after truffle compile
